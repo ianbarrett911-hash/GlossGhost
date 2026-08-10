@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlossGhost - Leave Nothing But The Shine</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            cyan: '#00f0ff',
+                            darkCyan: '#00a3e0',
+                            navy: '#0b132b',
+                            dark: '#08080c',
+                            card: '#12121a',
+                            muted: '#94a3b8'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'cyan-glow': '0 0 20px rgba(0, 240, 255, 0.25)',
+                        'cyan-glow-strong': '0 0 35px rgba(0, 240, 255, 0.55)',
+                        'cyan-inset': 'inset 0 0 15px rgba(0, 240, 255, 0.2)'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #08080c;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #08080c;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00f0ff;
+        }
+
+        /* 3D Bottle styling & rotations */
+        .bottle-container {
+            perspective: 1000px;
+        }
+        .bottle-3d {
+            transform: rotateY(-15deg) rotateX(10deg);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .bottle-container:hover .bottle-3d {
+            transform: rotateY(5deg) rotateX(5deg) scale(1.03);
+        }
+
+        /* Continuous scrolling ribbon animation */
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+        .scroll-ribbon {
+            display: flex;
+            width: max-content;
+            animation: scroll 35s linear infinite;
+        }
+        .scroll-ribbon:hover {
+            animation-play-state: paused;
+        }
+    </style>
+</head>
+<body class="text-white min-h-screen overflow-x-hidden selection:bg-brand-cyan selection:text-black">
+    <!-- Top Announcement Bar -->
+    <div class="bg-gradient-to-r from-brand-darkCyan to-brand-cyan text-black py-2 text-center text-xs font-bold tracking-widest uppercase relative z-50">
+        ✨ Advanced Polymer Formulation • Pleasant Vanilla & Coconut Scent • Safe on PPF, Vinyl & All Paintwork ✨
+    </div>
+
+    <div id="app" class="relative min-h-screen flex flex-col justify-between">
+        <!-- Navigation Header -->
+        <header class="sticky top-0 z-40 bg-brand-dark/95 backdrop-blur-md border-b border-white/5 transition-all duration-300">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-20">
+                    <!-- Brand Logo -->
+                    <div class="flex items-center space-x-3 cursor-pointer group" onclick="window.location.reload();">
+                        <div class="relative w-12 h-12 flex items-center justify-center bg-white/5 rounded-xl border border-white/10 group-hover:border-brand-cyan/50 transition-all duration-300">
+                            <!-- SVG Ghost Logo Outline with Car silhouette inside logo box -->
+                            <svg class="w-8 h-8 text-white group-hover:text-brand-cyan transition-colors duration-300" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Ghost outline hovering -->
+                                <path d="M32 10C24.268 10 18 16.268 18 24C18 31.5 22 34 22 38C22 40 20 42 20 44C20 46.5 24 48 32 48C40 48 44 46.5 44 44C44 42 42 40 42 38C42 34 46 31.5 46 24C46 16.268 39.732 10 32 10Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <!-- Ghost Eyes -->
+                                <circle cx="28" cy="22" r="2.5" fill="currentColor"/>
+                                <circle cx="36" cy="22" r="2.5" fill="currentColor"/>
+                                <!-- Ghost Smiley mouth (small curves) -->
+                                <path d="M30 28C31 29 33 29 34 28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <!-- Car outline silhouette underneath -->
+                                <path d="M14 52C14 50 16 48 20 48H44C48 48 50 50 50 52V54H14V52Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="22" cy="54" r="3" stroke="currentColor" stroke-width="1.5" fill="#08080c"/>
+                                <circle cx="42" cy="54" r="3" stroke="currentColor" stroke-width="1.5" fill="#08080c"/>
+                            </svg>
+                            <div class="absolute -inset-0.5 bg-brand-cyan rounded-xl opacity-0 group-hover:opacity-10 blur-md transition-all duration-300"></div>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-lg font-black tracking-wider text-white group-hover:text-brand-cyan transition-colors duration-300">GLOSS<span class="text-brand-cyan group-hover:text-white transition-colors duration-300">GHOST</span></span>
+                            <span class="text-[9px] font-bold text-white/40 tracking-[0.3em] uppercase group-hover:text-brand-cyan/50 transition-colors duration-300">Detail Spray</span>
+                        </div>
+                    </div>
+
+                    <!-- Desktop Nav Links -->
+                    <nav class="hidden md:flex items-center space-x-10 text-xs font-bold tracking-[0.15em] uppercase">
+                        <a href="#home" class="text-brand-cyan border-b-2 border-brand-cyan pb-1 transition-all duration-200">HOME</a>
+                        <a href="#shop" class="text-white/70 hover:text-brand-cyan transition-colors duration-200 pb-1 border-b-2 border-transparent hover:border-brand-cyan">SHOP</a>
+                        <a href="#about" class="text-white/70 hover:text-brand-cyan transition-colors duration-200 pb-1 border-b-2 border-transparent hover:border-brand-cyan">ABOUT</a>
+                        <a href="#reviews" class="text-white/70 hover:text-brand-cyan transition-colors duration-200 pb-1 border-b-2 border-transparent hover:border-brand-cyan">REVIEWS</a>
+                        <a href="#blog" class="text-white/70 hover:text-brand-cyan transition-colors duration-200 pb-1 border-b-2 border-transparent hover:border-brand-cyan">BLOG</a>
+                        <a href="#contact" class="text-white/70 hover:text-brand-cyan transition-colors duration-200 pb-1 border-b-2 border-transparent hover:border-brand-cyan">CONTACT</a>
+                    </nav>
+
+                    <!-- Utility Buttons (Right Side) -->
+                    <div class="flex items-center space-x-6">
+                        <!-- Search Icon button -->
+                        <button class="text-white/70 hover:text-brand-cyan transition-colors duration-200 p-2 rounded-lg hover:bg-white/5">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                        </button>
+
+                        <!-- Profile Icon button -->
+                        <button class="text-white/70 hover:text-brand-cyan transition-colors duration-200 p-2 rounded-lg hover:bg-white/5">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </button>
+
+                        <!-- Shopping Cart Button with Dynamic cyan badge -->
+                        <button onclick="toggleCartDrawer()" class="relative text-white/70 hover:text-brand-cyan transition-all duration-200 p-2 rounded-lg hover:bg-white/5 group">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <circle cx="9" cy="21" r="1"></circle>
+                                <circle cx="20" cy="21" r="1"></circle>
+                                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                            </svg>
+                            <span id="cart-badge" class="absolute -top-1 -right-1 bg-brand-cyan text-black font-black text-[9px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-brand-dark shadow-cyan-glow group-hover:scale-110 transition-transform duration-200">0</span>
+                        </button>
+
+                        <!-- Mobile Menu Button -->
+                        <button onclick="toggleMobileMenu()" class="md:hidden text-white/70 hover:text-brand-cyan transition-colors duration-200 p-2 rounded-lg hover:bg-white/5">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <line x1="4" y1="6" x2="20" y2="6"></line>
+                                <line x1="4" y1="12" x2="20" y2="12"></line>
+                                <line x1="4" y1="18" x2="20" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile menu dropdown panel -->
+            <div id="mobile-menu" class="hidden md:hidden bg-brand-dark/95 border-b border-white/5 px-4 pt-2 pb-6 space-y-3 transition-all duration-300">
+                <a href="#home" onclick="toggleMobileMenu()" class="block text-brand-cyan font-bold tracking-wider py-2 border-b border-white/5">HOME</a>
+                <a href="#shop" onclick="toggleMobileMenu()" class="block text-white/70 hover:text-brand-cyan font-bold tracking-wider py-2 border-b border-white/5">SHOP</a>
+                <a href="#about" onclick="toggleMobileMenu()" class="block text-white/70 hover:text-brand-cyan font-bold tracking-wider py-2 border-b border-white/5">ABOUT</a>
+                <a href="#reviews" onclick="toggleMobileMenu()" class="block text-white/70 hover:text-brand-cyan font-bold tracking-wider py-2 border-b border-white/5">REVIEWS</a>
+                <a href="#blog" onclick="toggleMobileMenu()" class="block text-white/70 hover:text-brand-cyan font-bold tracking-wider py-2 border-b border-white/5">BLOG</a>
+                <a href="#contact" onclick="toggleMobileMenu()" class="block text-white/70 hover:text-brand-cyan font-bold tracking-wider py-2">CONTACT</a>
+            </div>
+        </header>
+
+        <main class="flex-grow">
+            <!-- Hero Section -->
+            <section id="home" class="relative pt-10 pb-20 md:py-32 overflow-hidden flex items-center min-h-[calc(100vh-130px)]">
+                <!-- Decorative background light flares -->
+                <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-cyan/5 rounded-full blur-[120px] pointer-events-none"></div>
+                <div class="absolute bottom-0 right-0 w-[350px] h-[350px] bg-brand-darkCyan/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+                        <!-- Hero Left Content (5 cols) -->
+                        <div class="lg:col-span-6 space-y-8 text-left">
+                            <!-- Badge Label -->
+                            <div class="inline-flex items-center space-x-2 bg-brand-cyan/10 border border-brand-cyan/20 px-3 py-1.5 rounded-full">
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-cyan animate-pulse"></span>
+                                <span class="text-[10px] font-black tracking-[0.2em] text-brand-cyan uppercase">Premium Waterless Detailer</span>
+                            </div>
+
+                            <!-- Big Headline -->
+                            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-none text-white">
+                                LEAVE NOTHING BUT <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-darkCyan block sm:inline">THE SHINE</span>
+                            </h1>
+
+                            <!-- Descriptive Copy -->
+                            <p class="text-base sm:text-lg text-brand-muted/90 font-medium max-w-xl leading-relaxed">
+                                Experience GlossGhost, the ultra-slick polymer detail spray that encapsulates dust, grease, and contamination while leaving behind a deep, high-gloss hydrophobic barrier. Simply spray, wipe, and admire.
+                            </p>
+
+                            <!-- Feature list column layout -->
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-2">
+                                <div class="flex items-start space-x-3 group">
+                                    <div class="p-2 rounded-lg bg-white/5 border border-white/10 group-hover:border-brand-cyan/50 transition-colors duration-300">
+                                        <!-- High Lubricity Formula Icon -->
+                                        <svg class="w-5 h-5 text-brand-cyan" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="text-xs font-black tracking-wider uppercase text-white">High Lubricity</span>
+                                        <span class="text-[10px] text-brand-muted mt-0.5">Safely lifts dirt & grit</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start space-x-3 group">
+                                    <div class="p-2 rounded-lg bg-white/5 border border-white/10 group-hover:border-brand-cyan/50 transition-colors duration-300">
+                                        <!-- Hydrophobic Gloss Protection Icon -->
+                                        <svg class="w-5 h-5 text-brand-cyan" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="text-xs font-black tracking-wider uppercase text-white">Incredible Gloss</span>
+                                        <span class="text-[10px] text-brand-muted mt-0.5">Deep wet-look shine</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start space-x-3 group">
+                                    <div class="p-2 rounded-lg bg-white/5 border border-white/10 group-hover:border-brand-cyan/50 transition-colors duration-300">
+                                        <!-- Safe on PPF & Coating icon -->
+                                        <svg class="w-5 h-5 text-brand-cyan" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="text-xs font-black tracking-wider uppercase text-white">Versatile</span>
+                                        <span class="text-[10px] text-brand-muted mt-0.5">Safe on paint, glass, trim</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="flex flex-wrap items-center gap-4 pt-4">
+                                <button onclick="addToCart(1, 'GlossGhost Polymer Detail Spray 500ml', 14.99)" class="px-8 py-4 bg-brand-cyan hover:bg-brand-darkCyan text-black font-black text-xs tracking-[0.2em] uppercase rounded-xl transition-all duration-300 shadow-cyan-glow hover:shadow-cyan-glow-strong transform hover:-translate-y-0.5 flex items-center space-x-2">
+                                    <span>SHOP NOW</span>
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                        <polyline points="12 5 19 12 12 19"></polyline>
+                                    </svg>
+                                </button>
+                                <button onclick="openVideoModal()" class="px-8 py-4 bg-white/5 hover:bg-white/10 text-white font-black text-xs tracking-[0.2em] uppercase rounded-xl border border-white/10 hover:border-brand-cyan/40 transition-all duration-300 transform hover:-translate-y-0.5 flex items-center space-x-2">
+                                    <svg class="w-4 h-4 text-brand-cyan animate-pulse" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M8 5v14l11-7z"></path>
+                                    </svg>
+                                    <span>WATCH IN ACTION</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Hero Right Content (7 cols) - Interactive 3D CSS/SVG Rendered Bottle + Supercar Background -->
+                        <div class="lg:col-span-6 relative w-full flex items-center justify-center min-h-[450px] lg:min-h-[550px]">
+                            <!-- Supercar backdrop illustration using high-fidelity overlapping vector structures -->
+                            <div class="absolute inset-0 w-full h-full flex items-center justify-center opacity-40 pointer-events-none scale-105">
+                                <svg class="w-full h-full max-w-[550px]" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <!-- Dynamic Cyber-Supercar backdrop in cyber blue/neon colors -->
+                                    <g opacity="0.6">
+                                        <!-- Floor shadow grid -->
+                                        <path d="M50 320 H450 L350 380 H150 L50 320 Z" fill="url(#floorShadowGradient)"/>
+                                        <!-- Car body main silhouette -->
+                                        <path d="M100 280 C120 230 180 180 280 180 C360 180 430 220 450 280 C440 290 410 300 390 300 C370 290 340 285 280 285 C220 285 190 290 170 300 C150 300 110 290 100 280 Z" fill="#0c0d14" stroke="rgba(0, 240, 255, 0.4)" stroke-width="2.5"/>
+                                        <!-- Cabin Glass -->
+                                        <path d="M180 230 C200 200 240 190 280 190 C330 190 360 210 380 240 C330 245 230 245 180 230 Z" fill="rgba(0, 240, 255, 0.15)" stroke="rgba(0, 240, 255, 0.6)" stroke-width="1.5"/>
+                                        <!-- Neon Wheel Arch glows -->
+                                        <circle cx="150" cy="285" r="28" stroke="rgba(0, 240, 255, 0.8)" stroke-width="2" fill="#040406"/>
+                                        <circle cx="370" cy="285" r="28" stroke="rgba(0, 240, 255, 0.8)" stroke-width="2" fill="#040406"/>
+                                        <circle cx="150" cy="285" r="16" fill="rgba(0, 240, 255, 0.3)"/>
+                                        <circle cx="370" cy="285" r="16" fill="rgba(0, 240, 255, 0.3)"/>
+                                        <!-- LED Headlight Neon line -->
+                                        <path d="M105 275 C120 273 140 278 145 280" stroke="#00f0ff" stroke-width="3.5" stroke-linecap="round"/>
+                                        <path d="M445 275 C430 273 410 278 405 280" stroke="#00f0ff" stroke-width="3.5" stroke-linecap="round"/>
+                                    </g>
+                                    <defs>
+                                        <radialGradient id="floorShadowGradient" cx="50%" cy="50%" r="50%">
+                                            <stop offset="0%" stop-color="rgba(0, 240, 255, 0.15)"/>
+                                            <stop offset="100%" stop-color="rgba(8, 8, 12, 0)"/>
+                                        </radialGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+
+                            <!-- 3D Overlapping Rendered GlossGhost Product Bottle Container -->
+                            <div class="bottle-container relative z-20 w-[240px] h-[480px]">
+                                <div class="bottle-3d w-full h-full relative flex flex-col items-center">
+                                    <!-- Bottle Cap & Trigger Spray -->
+                                    <div class="w-16 h-28 relative flex flex-col items-center z-30">
+                                        <!-- Spray head nozzle mechanism -->
+                                        <svg class="w-20 h-16 text-neutral-400 drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <!-- Main trigger head body -->
+                                            <path d="M10 25 C10 20 40 10 80 15 C85 16 90 22 90 28 C90 35 75 45 65 45 L50 45 C45 45 42 40 40 38 L25 38 L15 38 Z" fill="#181822" stroke="#2c2c3e" stroke-width="2"/>
+                                            <!-- Nozzle Ring -->
+                                            <rect x="3" y="21" width="8" height="12" rx="1.5" fill="#00f0ff" stroke="#00a3e0" stroke-width="1"/>
+                                            <!-- Trigger lever -->
+                                            <path d="M38 38 C35 48 30 58 26 65" stroke="#181822" stroke-width="5.5" stroke-linecap="round"/>
+                                            <path d="M38 38 C35 48 30 58 26 65" stroke="#2c2c3e" stroke-width="2.5" stroke-linecap="round"/>
+                                            <!-- Neck cap threads -->
+                                            <rect x="42" y="45" width="20" height="15" fill="#12121a" stroke="#222" stroke-width="1"/>
+                                            <line x1="42" y1="50" x2="62" y2="50" stroke="#00f0ff" stroke-width="1"/>
+                                            <line x1="42" y1="55" x2="62" y2="55" stroke="#00f0ff" stroke-width="1"/>
+                                        </svg>
+                                    </div>
+
+                                    <!-- Liquid Filled Bottle Neck & Torso -->
+                                    <div class="w-24 h-[350px] bg-gradient-to-b from-[#101524] to-[#0a0c14] border-2 border-white/10 rounded-[2.5rem] relative flex flex-col items-center justify-start overflow-hidden shadow-2xl shadow-black drop-shadow-[0_10px_30px_rgba(0,240,255,0.15)]">
+                                        <!-- Translucent blue/cyan liquid inside -->
+                                        <div class="absolute inset-0.5 bg-gradient-to-t from-brand-cyan/25 to-brand-cyan/5 rounded-[2.3rem] pointer-events-none"></div>
+
+                                        <!-- Shiny Glass Reflection highlight -->
+                                        <div class="absolute left-2.5 top-2 bottom-2 w-1.5 bg-white/20 blur-[0.5px] rounded-full opacity-60"></div>
+                                        <div class="absolute right-2.5 top-2 bottom-2 w-1.5 bg-white/5 blur-[1px] rounded-full opacity-30"></div>
+
+                                        <!-- Premium GlossGhost Label wrapping bottle core -->
+                                        <div class="absolute top-24 left-1.5 right-1.5 bg-brand-card/95 border border-brand-cyan/25 rounded-2xl py-6 px-3 flex flex-col items-center justify-between shadow-2xl">
+                                            <div class="absolute inset-0 bg-gradient-to-b from-brand-cyan/5 to-transparent rounded-2xl pointer-events-none"></div>
+
+                                            <!-- Mini Brand Icon -->
+                                            <div class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-brand-cyan shadow-cyan-glow">
+                                                <svg class="w-5 h-5" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M32 10C24.268 10 18 16.268 18 24C18 31.5 22 34 22 38C22 40 20 42 20 44C20 46.5 24 48 32 48C40 48 44 46.5 44 44C44 42 42 40 42 38C42 34 46 31.5 46 24C46 16.268 39.732 10 32 10Z" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                                                </svg>
+                                            </div>
+
+                                            <div class="text-center mt-3">
+                                                <h2 class="text-xs font-black tracking-widest text-white">GLOSS<span class="text-brand-cyan">GHOST</span></h2>
+                                                <p class="text-[8px] font-bold text-brand-cyan/80 tracking-[0.25em] uppercase mt-1">Polymer Detail Spray</p>
+                                            </div>
+
+                                            <!-- Features listed in micro typography -->
+                                            <div class="w-full space-y-1.5 mt-5">
+                                                <div class="flex items-center space-x-1.5 justify-center">
+                                                    <span class="w-1 h-1 rounded-full bg-brand-cyan"></span>
+                                                    <span class="text-[6.5px] font-bold text-white/70 tracking-wider uppercase">High Lubricity</span>
+                                                </div>
+                                                <div class="flex items-center space-x-1.5 justify-center">
+                                                    <span class="w-1 h-1 rounded-full bg-brand-cyan"></span>
+                                                    <span class="text-[6.5px] font-bold text-white/70 tracking-wider uppercase">Show Car Gloss</span>
+                                                </div>
+                                                <div class="flex items-center space-x-1.5 justify-center">
+                                                    <span class="w-1 h-1 rounded-full bg-brand-cyan"></span>
+                                                    <span class="text-[6.5px] font-bold text-white/70 tracking-wider uppercase">Scented Formula</span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Fragrance Ribbon badge -->
+                                            <div class="mt-4 bg-[#0a0e1c] border border-white/5 rounded-md px-2 py-1 text-center w-full">
+                                                <span class="text-[6px] font-black text-brand-cyan tracking-widest uppercase block">COCONUT & VANILLA</span>
+                                            </div>
+
+                                            <div class="text-center mt-4">
+                                                <p class="text-[6.5px] font-bold text-white/30 tracking-widest uppercase">PROFESSIONAL GRADE • 500ML</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Cyan Floating Fragrance tag pointing to bottle -->
+                                <div class="absolute -right-8 bottom-28 bg-brand-dark/95 border border-brand-cyan/30 rounded-xl py-2 px-3 flex items-center space-x-2 shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-300">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-brand-cyan flex items-center justify-center text-[6px] text-black font-black">✓</div>
+                                    <div class="flex flex-col">
+                                        <span class="text-[8px] font-black text-white tracking-wider uppercase">Fragrance Notes</span>
+                                        <span class="text-[7px] text-brand-cyan font-bold tracking-wider uppercase">Coconut & Vanilla</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Trust / Feature Banner Section -->
+            <section class="bg-brand-card/30 border-y border-white/5 py-12 relative z-10">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <!-- Card 1: UK Shipping -->
+                        <div class="flex items-center space-x-4 p-6 rounded-2xl bg-brand-card/50 border border-white/5 hover:border-brand-cyan/20 transition-all duration-300 group">
+                            <div class="p-3 bg-white/5 rounded-xl text-brand-cyan group-hover:bg-brand-cyan group-hover:text-black transition-all duration-300">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                    <rect x="1" y="3" width="15" height="13" rx="2"></rect>
+                                    <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                                    <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                                    <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                                </svg>
+                            </div>
+                            <div class="flex flex-col text-left">
+                                <span class="text-xs font-black tracking-widest uppercase text-white">FAST UK SHIPPING</span>
+                                <span class="text-[10px] text-brand-muted mt-1">Quick & reliable delivery to your door</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Premium Quality -->
+                        <div class="flex items-center space-x-4 p-6 rounded-2xl bg-brand-card/50 border border-white/5 hover:border-brand-cyan/20 transition-all duration-300 group">
+                            <div class="p-3 bg-white/5 rounded-xl text-brand-cyan group-hover:bg-brand-cyan group-hover:text-black transition-all duration-300">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="8" r="7"></circle>
+                                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                                </svg>
+                            </div>
+                            <div class="flex flex-col text-left">
+                                <span class="text-xs font-black tracking-widest uppercase text-white">PREMIUM QUALITY</span>
+                                <span class="text-[10px] text-brand-muted mt-1">Professional grade car detailing formula</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 3: Money Back Guarantee -->
+                        <div class="flex items-center space-x-4 p-6 rounded-2xl bg-brand-card/50 border border-white/5 hover:border-brand-cyan/20 transition-all duration-300 group">
+                            <div class="p-3 bg-white/5 rounded-xl text-brand-cyan group-hover:bg-brand-cyan group-hover:text-black transition-all duration-300">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                    <path d="m9 11 2 2 4-4"></path>
+                                </svg>
+                            </div>
+                            <div class="flex flex-col text-left">
+                                <span class="text-xs font-black tracking-widest uppercase text-white">MONEY BACK GUARANTEE</span>
+                                <span class="text-[10px] text-brand-muted mt-1">30 day satisfaction promise</span>
+                            </div>
+                        </div>
+
+                        <!-- Card 4: Dedicated Support -->
+                        <div class="flex items-center space-x-4 p-6 rounded-2xl bg-brand-card/50 border border-white/5 hover:border-brand-cyan/20 transition-all duration-300 group">
+                            <div class="p-3 bg-white/5 rounded-xl text-brand-cyan group-hover:bg-brand-cyan group-hover:text-black transition-all duration-300">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                    <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                                    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"></path>
+                                </svg>
+                            </div>
+                            <div class="flex flex-col text-left">
+                                <span class="text-xs font-black tracking-widest uppercase text-white">DEDICATED SUPPORT</span>
+                                <span class="text-[10px] text-brand-muted mt-1">We are here to help whenever you need</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Main Feature Grid ("Built for Enthusiasts") -->
+            <section id="shop" class="relative py-24 lg:py-32 overflow-hidden">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <!-- Heading -->
+                    <div class="text-center space-y-4 mb-20">
+                        <span class="text-xs font-black tracking-[0.3em] uppercase text-brand-cyan">BUILT FOR ENTHUSIASTS</span>
+                        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight uppercase text-white">
+                            DETAIL. PROTECT. IMPRESS.
+                        </h2>
+                        <div class="w-24 h-1 bg-gradient-to-r from-brand-cyan to-brand-darkCyan mx-auto rounded-full mt-4"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                        <!-- Left Asymmetric 4-Column Feature Gallery (8 cols) -->
+                        <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
+
+                            <!-- Gallery Card 1: Waterless Cleaning -->
+                            <div class="group relative rounded-3xl bg-brand-card/40 border border-white/5 hover:border-brand-cyan/35 transition-all duration-300 p-8 overflow-hidden flex flex-col justify-between min-h-[240px]">
+                                <div class="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <div class="space-y-4">
+                                    <div class="p-3 bg-white/5 rounded-2xl w-fit text-brand-cyan border border-white/10 group-hover:border-brand-cyan/50 transition-colors duration-300">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-lg font-black tracking-wider uppercase text-white group-hover:text-brand-cyan transition-colors duration-200">Waterless Cleaning</h3>
+                                    <p class="text-xs text-brand-muted leading-relaxed font-medium">
+                                        Perfect for light dust, pollen, fingerprints, and road grime. Safely encapsulates particles to prevent scratches during wiping.
+                                    </p>
+                                </div>
+                                <div class="text-[10px] font-bold text-brand-cyan/50 uppercase tracking-widest mt-6 group-hover:text-brand-cyan transition-colors duration-200">
+                                    LUBRICATING FORMULA →
+                                </div>
+                            </div>
+
+                            <!-- Gallery Card 2: Enhances Gloss -->
+                            <div class="group relative rounded-3xl bg-brand-card/40 border border-white/5 hover:border-brand-cyan/35 transition-all duration-300 p-8 overflow-hidden flex flex-col justify-between min-h-[240px]">
+                                <div class="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <div class="space-y-4">
+                                    <div class="p-3 bg-white/5 rounded-2xl w-fit text-brand-cyan border border-white/10 group-hover:border-brand-cyan/50 transition-colors duration-300">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-lg font-black tracking-wider uppercase text-white group-hover:text-brand-cyan transition-colors duration-200">Enhances Gloss</h3>
+                                    <p class="text-xs text-brand-muted leading-relaxed font-medium">
+                                        Specialized advanced detailing polymers cure instantly to add deep, wet-look depth and unmatched slick reflectiveness.
+                                    </p>
+                                </div>
+                                <div class="text-[10px] font-bold text-brand-cyan/50 uppercase tracking-widest mt-6 group-hover:text-brand-cyan transition-colors duration-200">
+                                    SHOW CAR FINISH →
+                                </div>
+                            </div>
+
+                            <!-- Gallery Card 3: Incredible Slickness -->
+                            <div class="group relative rounded-3xl bg-brand-card/40 border border-white/5 hover:border-brand-cyan/35 transition-all duration-300 p-8 overflow-hidden flex flex-col justify-between min-h-[240px]">
+                                <div class="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <div class="space-y-4">
+                                    <div class="p-3 bg-white/5 rounded-2xl w-fit text-brand-cyan border border-white/10 group-hover:border-brand-cyan/50 transition-colors duration-300">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+                                            <path d="M12 16c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-lg font-black tracking-wider uppercase text-white group-hover:text-brand-cyan transition-colors duration-200">Incredible Slickness</h3>
+                                    <p class="text-xs text-brand-muted leading-relaxed font-medium">
+                                        Enjoy a surface so smooth that water, dust, and light debris slide right off. Dramatically simplifies weekly maintenance washing.
+                                    </p>
+                                </div>
+                                <div class="text-[10px] font-bold text-brand-cyan/50 uppercase tracking-widest mt-6 group-hover:text-brand-cyan transition-colors duration-200">
+                                    HYDROPHOBIC LAYER →
+                                </div>
+                            </div>
+
+                            <!-- Gallery Card 4: Versatile & Safe -->
+                            <div class="group relative rounded-3xl bg-brand-card/40 border border-white/5 hover:border-brand-cyan/35 transition-all duration-300 p-8 overflow-hidden flex flex-col justify-between min-h-[240px]">
+                                <div class="absolute inset-0 bg-gradient-to-br from-brand-cyan/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                <div class="space-y-4">
+                                    <div class="p-3 bg-white/5 rounded-2xl w-fit text-brand-cyan border border-white/10 group-hover:border-brand-cyan/50 transition-colors duration-300">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-lg font-black tracking-wider uppercase text-white group-hover:text-brand-cyan transition-colors duration-200">Versatile & Safe</h3>
+                                    <p class="text-xs text-brand-muted leading-relaxed font-medium">
+                                        Engineered strictly to be streak-free. Works beautifully on paint, clear coats, chrome, glass, exterior trim, and vinyl wraps.
+                                    </p>
+                                </div>
+                                <div class="text-[10px] font-bold text-brand-cyan/50 uppercase tracking-widest mt-6 group-hover:text-brand-cyan transition-colors duration-200">
+                                    ALL-ROUND COMPATIBLE →
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Right Column Detailing Review Panel Container (4 cols) -->
+                        <div id="reviews" class="lg:col-span-4 h-full">
+                            <div class="relative bg-gradient-to-b from-brand-card to-brand-dark border border-brand-cyan/20 rounded-3xl p-8 flex flex-col justify-between h-full min-h-[400px] text-left shadow-2xl">
+                                <div class="absolute -top-4 right-8 bg-brand-cyan text-black text-[9px] font-black tracking-widest px-3 py-1 rounded-full uppercase shadow-cyan-glow">
+                                    TESTIMONIAL
+                                </div>
+
+                                <div class="space-y-6">
+                                    <div class="space-y-2">
+                                        <span class="text-xs font-black text-brand-cyan tracking-widest uppercase">LOVED BY DETAILERS</span>
+                                        <!-- Five Cyan Stars -->
+                                        <div class="flex items-center space-x-1 text-brand-cyan">
+                                            <svg class="w-4 h-4 fill-currentColor" viewBox="0 0 20 20">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                            </svg>
+                                            <svg class="w-4 h-4 fill-currentColor" viewBox="0 0 20 20">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                            </svg>
+                                            <svg class="w-4 h-4 fill-currentColor" viewBox="0 0 20 20">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                            </svg>
+                                            <svg class="w-4 h-4 fill-currentColor" viewBox="0 0 20 20">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                            </svg>
+                                            <svg class="w-4 h-4 fill-currentColor" viewBox="0 0 20 20">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+
+                                    <blockquote class="text-base sm:text-lg font-medium text-white italic leading-relaxed pt-2">
+                                        "GlossGhost has become my absolute go-to detail spray. The slickness of the formula is unreal and the deep show-car shine is next level. Smells amazing too!"
+                                    </blockquote>
+                                </div>
+
+                                <div class="pt-8 space-y-4">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-10 h-10 rounded-full bg-brand-cyan/20 border border-brand-cyan/50 flex items-center justify-center font-bold text-brand-cyan text-xs">
+                                            JR
+                                        </div>
+                                        <div class="flex flex-col">
+                                            <span class="text-xs font-black text-white">Jamie R.</span>
+                                            <span class="text-[9px] font-bold text-brand-muted uppercase tracking-wider">Professional Detailer • Verified Buyer</span>
+                                        </div>
+                                    </div>
+
+                                    <button class="w-full py-3 bg-white/5 hover:bg-white/10 text-white font-black text-[10px] tracking-[0.25em] uppercase rounded-xl border border-white/10 hover:border-brand-cyan/40 transition-all duration-300">
+                                        VIEW ALL REVIEWS
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bottom Continuous Scrolling Ribbon Banner Section -->
+            <section class="bg-brand-cyan py-6 border-y border-brand-cyan/20 overflow-hidden relative z-10 select-none">
+                <div class="scroll-ribbon">
+                    <!-- Ribbon text repeated to create seamlessly looping visual structure -->
+                    <div class="flex items-center space-x-12 px-6">
+                        <span class="text-xs sm:text-sm font-black text-black tracking-[0.3em] uppercase whitespace-nowrap">✦ ADVANCED POLYMER TECHNOLOGY</span>
+                        <span class="text-xs sm:text-sm font-black text-black tracking-[0.3em] uppercase whitespace-nowrap">✦ PLEASANT COCONUT & VANILLA SCENT</span>
+                        <span class="text-xs sm:text-sm font-black text-black tracking-[0.3em] uppercase whitespace-nowrap">✦ PERFECT FOR DAILY MAINTENANCE</span>
+                        <span class="text-xs sm:text-sm font-black text-black tracking-[0.3em] uppercase whitespace-nowrap">✦ LEAVE NOTHING BUT THE SHINE</span>
+                    </div>
+                    <div class="flex items-center space-x-12 px-6">
+                        <span class="text-xs sm:text-sm font-black text-black tracking-[0.3em] uppercase whitespace-nowrap">✦ ADVANCED POLYMER TECHNOLOGY</span>
+                        <span class="text-xs sm:text-sm font-black text-black tracking-[0.3em] uppercase whitespace-nowrap">✦ PLEASANT COCONUT & VANILLA SCENT</span>
+                        <span class="text-xs sm:text-sm font-black text-black tracking-[0.3em] uppercase whitespace-nowrap">✦ PERFECT FOR DAILY MAINTENANCE</span>
+                        <span class="text-xs sm:text-sm font-black text-black tracking-[0.3em] uppercase whitespace-nowrap">✦ LEAVE NOTHING BUT THE SHINE</span>
+                    </div>
+                    <div class="flex items-center space-x-12 px-6">
+                        <span class="text-xs sm:text-sm font-black text-black tracking-[0.3em] uppercase whitespace-nowrap">✦ ADVANCED POLYMER TECHNOLOGY</span>
+                        <span class="text-xs sm:text-sm font-black text-black tracking-[0.3em] uppercase whitespace-nowrap">✦ PLEASANT COCONUT & VANILLA SCENT</span>
+                        <span class="text-xs sm:text-sm font-black text-black tracking-[0.3em] uppercase whitespace-nowrap">✦ PERFECT FOR DAILY MAINTENANCE</span>
+                        <span class="text-xs sm:text-sm font-black text-black tracking-[0.3em] uppercase whitespace-nowrap">✦ LEAVE NOTHING BUT THE SHINE</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer Section -->
+        <footer id="contact" class="bg-brand-dark border-t border-white/5 pt-20 pb-10 relative z-10 text-left">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-8 pb-16">
+
+                    <!-- Left branding info (5 cols) -->
+                    <div class="md:col-span-5 space-y-6">
+                        <div class="flex items-center space-x-3">
+                            <div class="relative w-10 h-10 flex items-center justify-center bg-white/5 rounded-xl border border-white/10">
+                                <svg class="w-6 h-6 text-brand-cyan" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M32 10C24.268 10 18 16.268 18 24C18 31.5 22 34 22 38C22 40 20 42 20 44C20 46.5 24 48 32 48C40 48 44 46.5 44 44C44 42 42 40 42 38C42 34 46 31.5 46 24C46 16.268 39.732 10 32 10Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <span class="text-base font-black tracking-wider text-white">GLOSS<span class="text-brand-cyan">GHOST</span></span>
+                        </div>
+                        <p class="text-xs text-brand-muted leading-relaxed max-w-sm">
+                            GlossGhost is dedicated to delivering the absolute finest professional-grade automotive detailing formulas for car enthusiasts and detailers worldwide.
+                        </p>
+                        <p class="text-[10px] text-brand-muted">
+                            📍 London, United Kingdom<br>
+                            ✉️ support@glossghost.com
+                        </p>
+                    </div>
+
+                    <!-- Center quick links (3 cols) -->
+                    <div class="md:col-span-3 space-y-6">
+                        <span class="text-xs font-black text-white tracking-[0.25em] uppercase block">QUICK LINKS</span>
+                        <ul class="space-y-3.5 text-xs text-brand-muted font-semibold">
+                            <li><a href="#home" class="hover:text-brand-cyan transition-colors duration-200">Home</a></li>
+                            <li><a href="#shop" class="hover:text-brand-cyan transition-colors duration-200">Shop Products</a></li>
+                            <li><a href="#reviews" class="hover:text-brand-cyan transition-colors duration-200">Customer Reviews</a></li>
+                            <li><a href="#about" class="hover:text-brand-cyan transition-colors duration-200">Our Story</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Right Newsletter signup (4 cols) -->
+                    <div class="md:col-span-4 space-y-6">
+                        <span class="text-xs font-black text-white tracking-[0.25em] uppercase block">JOIN THE CLUB</span>
+                        <p class="text-xs text-brand-muted leading-relaxed">
+                            Subscribe to receive exclusive detailing tips, early product releases, and member discount codes.
+                        </p>
+                        <form onsubmit="event.preventDefault(); alert('Thank you for subscribing!');" class="flex items-center space-x-2">
+                            <input type="email" placeholder="Your Email Address" required class="flex-grow bg-brand-card border border-white/10 rounded-xl px-4 py-3 text-xs text-white placeholder-brand-muted/50 focus:outline-none focus:border-brand-cyan/60 transition-colors duration-250">
+                            <button type="submit" class="px-5 py-3 bg-brand-cyan hover:bg-brand-darkCyan text-black font-black text-xs tracking-wider rounded-xl transition-colors duration-250">
+                                JOIN
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+
+                <!-- Copyright row -->
+                <div class="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-[10px] text-brand-muted font-bold space-y-4 sm:space-y-0">
+                    <span>© <span id="current-year">2026</span> GLOSSGHOST LTD. ALL RIGHTS RESERVED.</span>
+                    <div class="flex items-center space-x-6">
+                        <a href="#" class="hover:text-brand-cyan transition-colors">Privacy Policy</a>
+                        <a href="#" class="hover:text-brand-cyan transition-colors">Terms of Service</a>
+                        <a href="#" class="hover:text-brand-cyan transition-colors">Shipping & Returns</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Interactive Drawer / Sliding Cart Overlay Panel -->
+        <div id="cart-overlay" onclick="toggleCartDrawer()" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300"></div>
+        <div id="cart-drawer" class="fixed right-0 top-0 bottom-0 z-50 w-full sm:w-[450px] bg-brand-dark border-l border-white/10 translate-x-full transition-transform duration-300 flex flex-col justify-between text-left">
+            <!-- Cart Header -->
+            <div class="p-6 border-b border-white/5 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <svg class="w-5 h-5 text-brand-cyan animate-bounce" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <span class="text-sm font-black tracking-widest uppercase text-white">YOUR SHOPPING CART</span>
+                </div>
+                <button onclick="toggleCartDrawer()" class="text-white/60 hover:text-brand-cyan transition-colors duration-200 p-2 hover:bg-white/5 rounded-xl">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Cart Items Container list -->
+            <div id="cart-items" class="flex-grow overflow-y-auto p-6 space-y-6">
+                <!-- Fallback empty cart illustration -->
+                <div id="cart-empty-state" class="h-full flex flex-col items-center justify-center text-center space-y-4 py-20">
+                    <svg class="w-16 h-16 text-brand-muted/20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                        <circle cx="9" cy="21" r="1"></circle>
+                        <circle cx="20" cy="21" r="1"></circle>
+                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                    </svg>
+                    <div class="space-y-1">
+                        <span class="text-xs font-black tracking-wider text-white uppercase block">YOUR CART IS EMPTY</span>
+                        <span class="text-[10px] text-brand-muted font-medium">Add premium items to get started detailing.</span>
+                    </div>
+                </div>
+
+                <div id="cart-items-list" class="space-y-4 hidden">
+                    <!-- Added cart items populated dynamically -->
+                </div>
+            </div>
+
+            <!-- Cart Footer checkout logic -->
+            <div id="cart-checkout-box" class="p-6 border-t border-white/5 bg-brand-card/50 space-y-6 hidden">
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between text-xs font-semibold text-brand-muted">
+                        <span>SUBTOTAL</span>
+                        <span id="cart-subtotal">£0.00</span>
+                    </div>
+                    <div class="flex items-center justify-between text-xs font-semibold text-brand-muted">
+                        <span>SHIPPING</span>
+                        <span class="text-brand-cyan">FREE UK DELIVERY</span>
+                    </div>
+                    <div class="w-full h-px bg-white/5"></div>
+                    <div class="flex items-center justify-between text-sm font-black text-white">
+                        <span>TOTAL</span>
+                        <span id="cart-total" class="text-brand-cyan">£0.00</span>
+                    </div>
+                </div>
+
+                <button onclick="alert('Thank you for your purchase! Detailing order simulated successfully.'); clearCart(); toggleCartDrawer();" class="w-full py-4 bg-brand-cyan hover:bg-brand-darkCyan text-black font-black text-xs tracking-[0.2em] uppercase rounded-xl transition-all duration-300 shadow-cyan-glow hover:shadow-cyan-glow-strong">
+                    PROCEED TO CHECKOUT →
+                </button>
+            </div>
+        </div>
+
+        <!-- Detailing Watch In Action Video Modal Popup -->
+        <div id="video-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-4">
+            <div class="relative w-full max-w-4xl bg-brand-dark border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
+                <!-- Video Modal Header -->
+                <div class="p-5 border-b border-white/5 flex items-center justify-between">
+                    <span class="text-xs font-black tracking-widest text-brand-cyan uppercase">GLOSSGHOST DETAILED DEMO</span>
+                    <button onclick="closeVideoModal()" class="text-white/60 hover:text-brand-cyan transition-colors duration-200 p-2 hover:bg-white/5 rounded-xl">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Simulation Detailing Video player -->
+                <div class="relative aspect-video bg-black flex items-center justify-center p-8">
+                    <!-- SVG backdrop representing detailing animation -->
+                    <div class="absolute inset-0 flex items-center justify-center opacity-45 pointer-events-none">
+                        <svg class="w-1/2 h-1/2 text-brand-cyan/20" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 50 C20 40 40 40 50 50 C60 60 80 60 90 50" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                            <circle cx="50" cy="50" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                    </div>
+
+                    <div class="text-center space-y-4 max-w-md relative z-10">
+                        <div class="w-16 h-16 rounded-full bg-brand-cyan text-black flex items-center justify-center mx-auto shadow-cyan-glow-strong">
+                            <svg class="w-6 h-6 fill-currentColor" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z"></path>
+                            </svg>
+                        </div>
+                        <div class="space-y-1">
+                            <span class="text-sm font-black tracking-wider uppercase text-white block">Simulating Premium Detailing Demo Video</span>
+                            <p class="text-xs text-brand-muted font-medium">
+                                Watch how GlossGhost safely encapsulates dust, finger grease, and contaminants, creating a slick hydrophobic shell in seconds.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Interactive JavaScript Implementation -->
+    <script>
+        // Shopping Cart Storage structure
+        let cart = {};
+
+        // Toggle Cart drawer visibility
+        function toggleCartDrawer() {
+            const drawer = document.getElementById('cart-drawer');
+            const overlay = document.getElementById('cart-overlay');
+            const isOpened = drawer.classList.contains('translate-x-0');
+
+            if (isOpened) {
+                drawer.classList.remove('translate-x-0');
+                drawer.classList.add('translate-x-full');
+                overlay.classList.remove('opacity-100', 'pointer-events-auto');
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+            } else {
+                drawer.classList.remove('translate-x-full');
+                drawer.classList.add('translate-x-0');
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+                overlay.classList.add('opacity-100', 'pointer-events-auto');
+            }
+        }
+
+        // Add Product To Cart drawer
+        function addToCart(id, name, price) {
+            if (cart[id]) {
+                cart[id].qty += 1;
+            } else {
+                cart[id] = { id, name, price, qty: 1 };
+            }
+            updateCartUI();
+            toggleCartDrawer(); // auto-open to give instant visual feedback
+        }
+
+        // Change Cart Item Quantity level
+        function changeQty(id, delta) {
+            if (cart[id]) {
+                cart[id].qty += delta;
+                if (cart[id].qty <= 0) {
+                    delete cart[id];
+                }
+            }
+            updateCartUI();
+        }
+
+        // Clear entire cart
+        function clearCart() {
+            cart = {};
+            updateCartUI();
+        }
+
+        // Refresh Cart user interface
+        function updateCartUI() {
+            const badge = document.getElementById('cart-badge');
+            const emptyState = document.getElementById('cart-empty-state');
+            const listWrapper = document.getElementById('cart-items-list');
+            const checkoutBox = document.getElementById('cart-checkout-box');
+            const subtotalText = document.getElementById('cart-subtotal');
+            const totalText = document.getElementById('cart-total');
+
+            const items = Object.values(cart);
+            let totalQty = 0;
+            let subtotal = 0;
+
+            if (items.length === 0) {
+                emptyState.classList.remove('hidden');
+                listWrapper.classList.add('hidden');
+                checkoutBox.classList.add('hidden');
+                badge.innerText = '0';
+            } else {
+                emptyState.classList.add('hidden');
+                listWrapper.classList.remove('hidden');
+                checkoutBox.classList.remove('hidden');
+
+                // Render products html list
+                listWrapper.innerHTML = '';
+                items.forEach(item => {
+                    totalQty += item.qty;
+                    const itemTotal = item.price * item.qty;
+                    subtotal += itemTotal;
+
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'flex items-center justify-between p-4 rounded-2xl bg-brand-card/90 border border-white/5 hover:border-brand-cyan/20 transition-all duration-200';
+                    itemEl.innerHTML = `
+                        <div class="flex items-center space-x-4 text-left">
+                            <div class="w-12 h-12 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center text-brand-cyan">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                                </svg>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-xs font-black text-white tracking-wide uppercase max-w-[200px] truncate">${item.name}</span>
+                                <span class="text-[10px] text-brand-cyan font-bold mt-1">£${item.price.toFixed(2)}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3 bg-white/5 rounded-xl border border-white/5 px-2.5 py-1">
+                            <button onclick="changeQty(${item.id}, -1)" class="text-white hover:text-brand-cyan transition-colors text-xs font-bold px-1.5">-</button>
+                            <span class="text-xs font-black text-white">${item.qty}</span>
+                            <button onclick="changeQty(${item.id}, 1)" class="text-white hover:text-brand-cyan transition-colors text-xs font-bold px-1.5">+</button>
+                        </div>
+                    `;
+                    listWrapper.appendChild(itemEl);
+                });
+
+                badge.innerText = totalQty;
+                subtotalText.innerText = `£${subtotal.toFixed(2)}`;
+                totalText.innerText = `£${subtotal.toFixed(2)}`;
+            }
+        }
+
+        // Watch Demo video modal triggers
+        function openVideoModal() {
+            const modal = document.getElementById('video-modal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.classList.add('opacity-100', 'pointer-events-auto');
+        }
+
+        function closeVideoModal() {
+            const modal = document.getElementById('video-modal');
+            modal.classList.remove('opacity-100', 'pointer-events-auto');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        // Toggle Mobile Menu drawer drop lists
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Dynamic footer copyright auto update year logic
+        document.getElementById('current-year').innerText = new Date().getFullYear();
+    </script>
+</body>
+</html>
