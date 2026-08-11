@@ -98,9 +98,26 @@
                 <div class="flex items-center justify-between h-20">
                     <!-- Brand Logo -->
                     <div class="flex items-center space-x-3 cursor-pointer group" onclick="window.location.reload();">
-                        <div class="relative h-14 flex items-center justify-center bg-white/5 rounded-xl border border-white/10 group-hover:border-brand-cyan/50 transition-all duration-300 px-3">
-                            <img src="assets/logo_transparent.png" class="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105" alt="GlossGhost Logo">
+                        <div class="relative w-12 h-12 flex items-center justify-center bg-white/5 rounded-xl border border-white/10 group-hover:border-brand-cyan/50 transition-all duration-300">
+                            <!-- SVG Ghost Logo Outline with Car silhouette inside logo box -->
+                            <svg class="w-8 h-8 text-white group-hover:text-brand-cyan transition-colors duration-300" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <!-- Ghost outline hovering -->
+                                <path d="M32 10C24.268 10 18 16.268 18 24C18 31.5 22 34 22 38C22 40 20 42 20 44C20 46.5 24 48 32 48C40 48 44 46.5 44 44C44 42 42 40 42 38C42 34 46 31.5 46 24C46 16.268 39.732 10 32 10Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <!-- Ghost Eyes -->
+                                <circle cx="28" cy="22" r="2.5" fill="currentColor"/>
+                                <circle cx="36" cy="22" r="2.5" fill="currentColor"/>
+                                <!-- Ghost Smiley mouth (small curves) -->
+                                <path d="M30 28C31 29 33 29 34 28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <!-- Car outline silhouette underneath -->
+                                <path d="M14 52C14 50 16 48 20 48H44C48 48 50 50 50 52V54H14V52Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="22" cy="54" r="3" stroke="currentColor" stroke-width="1.5" fill="#08080c"/>
+                                <circle cx="42" cy="54" r="3" stroke="currentColor" stroke-width="1.5" fill="#08080c"/>
+                            </svg>
                             <div class="absolute -inset-0.5 bg-brand-cyan rounded-xl opacity-0 group-hover:opacity-10 blur-md transition-all duration-300"></div>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-lg font-black tracking-wider text-white group-hover:text-brand-cyan transition-colors duration-300">GLOSS<span class="text-brand-cyan group-hover:text-white transition-colors duration-300">GHOST</span></span>
+                            <span class="text-[9px] font-bold text-white/40 tracking-[0.3em] uppercase group-hover:text-brand-cyan/50 transition-colors duration-300">Detail Spray</span>
                         </div>
                     </div>
 
@@ -284,9 +301,77 @@
                             </div>
 
                             <!-- 3D Overlapping Rendered GlossGhost Product Bottle Container -->
-                            <div class="bottle-container relative z-20 w-[280px] h-[520px]">
-                                <div class="bottle-3d w-full h-full relative flex flex-col items-center justify-center">
-                                    <img src="assets/bottle_transparent.png" class="w-full h-full object-contain filter drop-shadow-[0_20px_50px_rgba(0,240,255,0.45)]" alt="GlossGhost Detail Spray Bottle">
+                            <div class="bottle-container relative z-20 w-[240px] h-[480px]">
+                                <div class="bottle-3d w-full h-full relative flex flex-col items-center">
+                                    <!-- Bottle Cap & Trigger Spray -->
+                                    <div class="w-16 h-28 relative flex flex-col items-center z-30">
+                                        <!-- Spray head nozzle mechanism -->
+                                        <svg class="w-20 h-16 text-neutral-400 drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]" viewBox="0 0 100 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <!-- Main trigger head body -->
+                                            <path d="M10 25 C10 20 40 10 80 15 C85 16 90 22 90 28 C90 35 75 45 65 45 L50 45 C45 45 42 40 40 38 L25 38 L15 38 Z" fill="#181822" stroke="#2c2c3e" stroke-width="2"/>
+                                            <!-- Nozzle Ring -->
+                                            <rect x="3" y="21" width="8" height="12" rx="1.5" fill="#00f0ff" stroke="#00a3e0" stroke-width="1"/>
+                                            <!-- Trigger lever -->
+                                            <path d="M38 38 C35 48 30 58 26 65" stroke="#181822" stroke-width="5.5" stroke-linecap="round"/>
+                                            <path d="M38 38 C35 48 30 58 26 65" stroke="#2c2c3e" stroke-width="2.5" stroke-linecap="round"/>
+                                            <!-- Neck cap threads -->
+                                            <rect x="42" y="45" width="20" height="15" fill="#12121a" stroke="#222" stroke-width="1"/>
+                                            <line x1="42" y1="50" x2="62" y2="50" stroke="#00f0ff" stroke-width="1"/>
+                                            <line x1="42" y1="55" x2="62" y2="55" stroke="#00f0ff" stroke-width="1"/>
+                                        </svg>
+                                    </div>
+
+                                    <!-- Liquid Filled Bottle Neck & Torso -->
+                                    <div class="w-24 h-[350px] bg-gradient-to-b from-[#101524] to-[#0a0c14] border-2 border-white/10 rounded-[2.5rem] relative flex flex-col items-center justify-start overflow-hidden shadow-2xl shadow-black drop-shadow-[0_10px_30px_rgba(0,240,255,0.15)]">
+                                        <!-- Translucent blue/cyan liquid inside -->
+                                        <div class="absolute inset-0.5 bg-gradient-to-t from-brand-cyan/25 to-brand-cyan/5 rounded-[2.3rem] pointer-events-none"></div>
+
+                                        <!-- Shiny Glass Reflection highlight -->
+                                        <div class="absolute left-2.5 top-2 bottom-2 w-1.5 bg-white/20 blur-[0.5px] rounded-full opacity-60"></div>
+                                        <div class="absolute right-2.5 top-2 bottom-2 w-1.5 bg-white/5 blur-[1px] rounded-full opacity-30"></div>
+
+                                        <!-- Premium GlossGhost Label wrapping bottle core -->
+                                        <div class="absolute top-24 left-1.5 right-1.5 bg-brand-card/95 border border-brand-cyan/25 rounded-2xl py-6 px-3 flex flex-col items-center justify-between shadow-2xl">
+                                            <div class="absolute inset-0 bg-gradient-to-b from-brand-cyan/5 to-transparent rounded-2xl pointer-events-none"></div>
+
+                                            <!-- Mini Brand Icon -->
+                                            <div class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-brand-cyan shadow-cyan-glow">
+                                                <svg class="w-5 h-5" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M32 10C24.268 10 18 16.268 18 24C18 31.5 22 34 22 38C22 40 20 42 20 44C20 46.5 24 48 32 48C40 48 44 46.5 44 44C44 42 42 40 42 38C42 34 46 31.5 46 24C46 16.268 39.732 10 32 10Z" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                                                </svg>
+                                            </div>
+
+                                            <div class="text-center mt-3">
+                                                <h2 class="text-xs font-black tracking-widest text-white">GLOSS<span class="text-brand-cyan">GHOST</span></h2>
+                                                <p class="text-[8px] font-bold text-brand-cyan/80 tracking-[0.25em] uppercase mt-1">Polymer Detail Spray</p>
+                                            </div>
+
+                                            <!-- Features listed in micro typography -->
+                                            <div class="w-full space-y-1.5 mt-5">
+                                                <div class="flex items-center space-x-1.5 justify-center">
+                                                    <span class="w-1 h-1 rounded-full bg-brand-cyan"></span>
+                                                    <span class="text-[6.5px] font-bold text-white/70 tracking-wider uppercase">High Lubricity</span>
+                                                </div>
+                                                <div class="flex items-center space-x-1.5 justify-center">
+                                                    <span class="w-1 h-1 rounded-full bg-brand-cyan"></span>
+                                                    <span class="text-[6.5px] font-bold text-white/70 tracking-wider uppercase">Show Car Gloss</span>
+                                                </div>
+                                                <div class="flex items-center space-x-1.5 justify-center">
+                                                    <span class="w-1 h-1 rounded-full bg-brand-cyan"></span>
+                                                    <span class="text-[6.5px] font-bold text-white/70 tracking-wider uppercase">Scented Formula</span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Fragrance Ribbon badge -->
+                                            <div class="mt-4 bg-[#0a0e1c] border border-white/5 rounded-md px-2 py-1 text-center w-full">
+                                                <span class="text-[6px] font-black text-brand-cyan tracking-widest uppercase block">COCONUT & VANILLA</span>
+                                            </div>
+
+                                            <div class="text-center mt-4">
+                                                <p class="text-[6.5px] font-bold text-white/30 tracking-widest uppercase">PROFESSIONAL GRADE • 500ML</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <!-- Cyan Floating Fragrance tag pointing to bottle -->
@@ -553,9 +638,12 @@
                     <!-- Left branding info (5 cols) -->
                     <div class="md:col-span-5 space-y-6">
                         <div class="flex items-center space-x-3">
-                            <div class="relative h-12 flex items-center justify-center bg-white/5 rounded-xl border border-white/10 px-3">
-                                <img src="assets/logo_transparent.png" class="h-8 w-auto object-contain" alt="GlossGhost Logo">
+                            <div class="relative w-10 h-10 flex items-center justify-center bg-white/5 rounded-xl border border-white/10">
+                                <svg class="w-6 h-6 text-brand-cyan" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M32 10C24.268 10 18 16.268 18 24C18 31.5 22 34 22 38C22 40 20 42 20 44C20 46.5 24 48 32 48C40 48 44 46.5 44 44C44 42 42 40 42 38C42 34 46 31.5 46 24C46 16.268 39.732 10 32 10Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
                             </div>
+                            <span class="text-base font-black tracking-wider text-white">GLOSS<span class="text-brand-cyan">GHOST</span></span>
                         </div>
                         <p class="text-xs text-brand-muted leading-relaxed max-w-sm">
                             GlossGhost is dedicated to delivering the absolute finest professional-grade automotive detailing formulas for car enthusiasts and detailers worldwide.
@@ -799,8 +887,10 @@
                     itemEl.className = 'flex items-center justify-between p-4 rounded-2xl bg-brand-card/90 border border-white/5 hover:border-brand-cyan/20 transition-all duration-200';
                     itemEl.innerHTML = `
                         <div class="flex items-center space-x-4 text-left">
-                            <div class="w-12 h-12 bg-brand-dark rounded-xl border border-white/10 flex items-center justify-center overflow-hidden">
-                                <img src="assets/bottle_transparent.png" class="w-10 h-10 object-contain" alt="GlossGhost Mini">
+                            <div class="w-12 h-12 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center text-brand-cyan">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                                </svg>
                             </div>
                             <div class="flex flex-col">
                                 <span class="text-xs font-black text-white tracking-wide uppercase max-w-[200px] truncate">${item.name}</span>
