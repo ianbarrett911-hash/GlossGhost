@@ -170,6 +170,7 @@ async function submitRegisterInterestForm(event) {
   const emailField = form.querySelector('input[name="email"]');
   const consentField = form.querySelector('input[name="consent"]');
   const honeypotField = form.querySelector('input[name="company"]');
+  const submitButton = form.querySelector('button[type="submit"]');
 
   if (!emailField || !consentField) {
     return;
@@ -185,26 +186,31 @@ async function submitRegisterInterestForm(event) {
   }
 
   const endpoint = form.dataset.endpoint || window.GLOSSGHOST_INTEREST_ENDPOINT || '';
-  if (!endpoint) {
-    alert('Interest registration endpoint not configured yet. Please email support@glossghost.com and we will add you manually.');
+  if (!endpoint || endpoint.includes('REPLACE_WITH_YOUR_FORM_ID')) {
+    alert('Endpoint is not configured yet. Replace REPLACE_WITH_YOUR_FORM_ID in the form endpoint before going live.');
     return;
   }
 
-  const payload = {
-    email: emailField.value.trim(),
-    consent: true,
-    consentText: 'I consent to GlossGhost storing and processing my email to send launch updates.',
-    source: 'register-interest-form',
-    submittedAt: new Date().toISOString()
-  };
+  const formData = new FormData(form);
+  formData.set('email', emailField.value.trim());
+  formData.set('consent', consentField.checked ? 'yes' : 'no');
+  formData.set('consent_text', 'I consent to GlossGhost storing and processing my email to send launch updates.');
+  formData.set('submitted_at', new Date().toISOString());
+  formData.delete('company');
+
+  if (submitButton) {
+    submitButton.disabled = true;
+    submitButton.classList.add('opacity-70', 'cursor-not-allowed');
+    submitButton.textContent = 'SUBMITTING...';
+  }
 
   try {
     const response = await fetch(endpoint, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Accept': 'application/json'
       },
-      body: JSON.stringify(payload)
+      body: formData
     });
 
     if (!response.ok) {
@@ -212,9 +218,15 @@ async function submitRegisterInterestForm(event) {
     }
 
     form.reset();
-    alert('Thanks for registering your interest. Please check your email for confirmation if double opt-in is enabled.');
+    alert('Thanks for registering your interest. Please check your inbox for confirmation (double opt-in).');
   } catch (error) {
     alert('We could not submit your request right now. Please try again shortly or email support@glossghost.com.');
+  } finally {
+    if (submitButton) {
+      submitButton.disabled = false;
+      submitButton.classList.remove('opacity-70', 'cursor-not-allowed');
+      submitButton.textContent = 'REGISTER INTEREST';
+    }
   }
 }
 
