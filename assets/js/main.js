@@ -137,6 +137,87 @@ function toggleMobileMenu() {
   menu.classList.toggle('hidden');
 }
 
+function openStartupModal() {
+  const modal = document.getElementById('startup-modal');
+  if (!modal) {
+    return;
+  }
+  modal.classList.remove('opacity-0', 'pointer-events-none');
+  modal.classList.add('opacity-100', 'pointer-events-auto');
+}
+
+function closeStartupModal() {
+  const modal = document.getElementById('startup-modal');
+  if (!modal) {
+    return;
+  }
+  modal.classList.remove('opacity-100', 'pointer-events-auto');
+  modal.classList.add('opacity-0', 'pointer-events-none');
+}
+
+function jumpToRegisterInterest() {
+  closeStartupModal();
+  const target = document.getElementById('register-interest');
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+async function submitRegisterInterestForm(event) {
+  event.preventDefault();
+
+  const form = event.target;
+  const emailField = form.querySelector('input[name="email"]');
+  const consentField = form.querySelector('input[name="consent"]');
+  const honeypotField = form.querySelector('input[name="company"]');
+
+  if (!emailField || !consentField) {
+    return;
+  }
+
+  if (!consentField.checked) {
+    alert('Please provide consent before registering your interest.');
+    return;
+  }
+
+  if (honeypotField && honeypotField.value.trim() !== '') {
+    return;
+  }
+
+  const endpoint = form.dataset.endpoint || window.GLOSSGHOST_INTEREST_ENDPOINT || '';
+  if (!endpoint) {
+    alert('Interest registration endpoint not configured yet. Please email support@glossghost.com and we will add you manually.');
+    return;
+  }
+
+  const payload = {
+    email: emailField.value.trim(),
+    consent: true,
+    consentText: 'I consent to GlossGhost storing and processing my email to send launch updates.',
+    source: 'register-interest-form',
+    submittedAt: new Date().toISOString()
+  };
+
+  try {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      throw new Error('Request failed');
+    }
+
+    form.reset();
+    alert('Thanks for registering your interest. Please check your email for confirmation if double opt-in is enabled.');
+  } catch (error) {
+    alert('We could not submit your request right now. Please try again shortly or email support@glossghost.com.');
+  }
+}
+
 function runHeadlightFlash() {
   const hero = document.getElementById('home');
   if (!hero) {

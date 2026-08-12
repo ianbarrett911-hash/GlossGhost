@@ -124,6 +124,31 @@ body {
   opacity: 0;
 }
 
+@keyframes startupTicker {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.startup-banner-track {
+  display: flex;
+  width: max-content;
+  gap: 3rem;
+  animation: startupTicker 24s linear infinite;
+}
+
+.startup-banner-item {
+  padding-inline: 0.75rem;
+}
+
+.startup-banner-wrap:hover .startup-banner-track {
+  animation-play-state: paused;
+}
+
 @media (max-width: 767px) {
   header button,
   #mobile-menu a,
