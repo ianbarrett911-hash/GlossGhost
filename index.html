@@ -1,17 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-display-font="modern">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GlossGhost</title>
-    <meta name="description" content="GlossGhost premium waterless detailing products. Leave nothing but the shine.">
-    <meta http-equiv="refresh" content="0; url=modular.html">
+    <title>GlossGhost | Premium Waterless Detail Spray</title>
+    <meta name="description" content="GlossGhost Polymer Detail Spray delivers slick, glossy, waterless detailing performance. Leave nothing but the shine.">
+    <meta property="og:title" content="GlossGhost | Premium Waterless Detail Spray">
+    <meta property="og:description" content="Premium waterless detailing performance for enthusiasts and professionals.">
+    <meta property="og:image" content="Images/WEBSITE GLOSSGHOST.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.glossghost.com/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="GlossGhost | Premium Waterless Detail Spray">
+    <meta name="twitter:description" content="Leave nothing but the shine.">
+    <meta name="twitter:image" content="Images/WEBSITE GLOSSGHOST.png">
     <link rel="icon" type="image/png" href="Images/logoonly.png">
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        window.location.replace('modular.html');
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            cyan: '#00f0ff',
+                            darkCyan: '#00a3e0',
+                            navy: '#0b132b',
+                            dark: '#08080c',
+                            card: '#12121a',
+                            muted: '#94a3b8'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'cyan-glow': '0 0 20px rgba(0, 240, 255, 0.25)',
+                        'cyan-glow-strong': '0 0 35px rgba(0, 240, 255, 0.55)',
+                        'cyan-inset': 'inset 0 0 15px rgba(0, 240, 255, 0.2)'
+                    }
+                }
+            }
+        }
     </script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css?v=20260812.11">
 </head>
-<body>
-    <p>Redirecting to <a href="modular.html">modular.html</a>...</p>
+<body class="text-white min-h-screen overflow-x-hidden selection:bg-brand-cyan selection:text-black">
+    <div data-section="announcement"></div>
+    <div id="app" class="relative min-h-screen flex flex-col justify-between">
+        <div data-section="header"></div>
+        <main class="flex-grow">
+            <div data-section="hero"></div>
+            <div data-section="metrics-strip"></div>
+            <div data-section="feature-grid"></div>
+            <div data-section="about"></div>
+            <div data-section="mixology"></div>
+            <div data-section="ribbon"></div>
+        </main>
+        <div data-section="footer"></div>
+        <div data-section="cart-drawer"></div>
+        <div data-section="video-modal"></div>
+        <div data-section="startup-modal"></div>
+        <div data-section="interest-notice-modal"></div>
+        <div data-section="share-modal"></div>
+        <div data-section="email-share-modal"></div>
+    </div>
+    <script src="assets/js/main.js?v=20260812.11" defer></script>
+    <script src="assets/js/section-loader.js?v=20260812.11" defer></script>
 </body>
 </html>
