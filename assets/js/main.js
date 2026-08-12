@@ -165,6 +165,64 @@ function closeInterestNoticeModal() {
   modal.classList.add('opacity-0', 'pointer-events-none');
 }
 
+function closeShareModal() {
+  const modal = document.getElementById('share-modal');
+  if (!modal) {
+    return;
+  }
+  modal.classList.remove('opacity-100', 'pointer-events-auto');
+  modal.classList.add('opacity-0', 'pointer-events-none');
+}
+
+function openShareModal() {
+  const modal = document.getElementById('share-modal');
+  if (!modal) {
+    return;
+  }
+  modal.classList.remove('opacity-0', 'pointer-events-none');
+  modal.classList.add('opacity-100', 'pointer-events-auto');
+}
+
+async function copyGlossGhostLink() {
+  const shareUrl = `${window.location.origin}${window.location.pathname}`;
+
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(shareUrl);
+      return true;
+    }
+  } catch (error) {
+    // Fall through to the legacy copy path.
+  }
+
+  const tempInput = document.createElement('input');
+  tempInput.value = shareUrl;
+  tempInput.setAttribute('readonly', 'true');
+  tempInput.style.position = 'absolute';
+  tempInput.style.left = '-9999px';
+  document.body.appendChild(tempInput);
+  tempInput.select();
+
+  let copied = false;
+  try {
+    copied = document.execCommand('copy');
+  } catch (error) {
+    copied = false;
+  }
+
+  document.body.removeChild(tempInput);
+  return copied;
+}
+
+function emailGlossGhostLink() {
+  const shareUrl = `${window.location.origin}${window.location.pathname}`;
+  const shareTitle = 'GlossGhost | Premium Waterless Detail Spray';
+  const shareText = 'GlossGhost is worth a look.';
+  const subject = encodeURIComponent(shareTitle);
+  const body = encodeURIComponent(`${shareText}\n\n${shareUrl}`);
+  window.location.href = `mailto:?subject=${subject}&body=${body}`;
+}
+
 function openInterestNoticeModal({ title, message, kicker = 'Confirmation', tone = 'success' }) {
   const modal = document.getElementById('interest-notice-modal');
   const titleEl = document.getElementById('interest-notice-title');
@@ -210,12 +268,11 @@ async function shareGlossGhostPage() {
     if (error && error.name === 'AbortError') {
       return;
     }
-    // Fall back to email when the native share sheet is unavailable.
+    openShareModal();
+    return;
   }
 
-  const subject = encodeURIComponent(shareTitle);
-  const body = encodeURIComponent(`${shareText}\n\n${shareUrl}`);
-  window.location.href = `mailto:?subject=${subject}&body=${body}`;
+  openShareModal();
 }
 
 function jumpToRegisterInterest() {
