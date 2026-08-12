@@ -218,6 +218,62 @@ body {
   opacity: 0;
 }
 
+.cta-glint-target,
+.logo-glint-target {
+  position: relative;
+}
+
+.cta-glint-target {
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.cta-glint-target::after,
+.logo-glint-target::after {
+  content: '';
+  position: absolute;
+  inset-block: -20%;
+  left: -70%;
+  width: 50%;
+  transform: skewX(-18deg) translateX(-140%);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.cta-glint-target::after {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8), rgba(0, 240, 255, 0.6), rgba(255, 255, 255, 0));
+  filter: blur(0.5px);
+}
+
+.logo-glint-target::after {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.45), rgba(0, 240, 255, 0.28), rgba(255, 255, 255, 0));
+  filter: blur(1px);
+}
+
+.cta-glint-once::after {
+  animation: glintSweep 1180ms cubic-bezier(0.22, 1, 0.36, 1) 1;
+}
+
+.logo-glint-once::after {
+  animation: glintSweep 980ms cubic-bezier(0.22, 1, 0.36, 1) 1;
+}
+
+@keyframes glintSweep {
+  0% {
+    opacity: 0;
+    transform: skewX(-18deg) translateX(-140%);
+  }
+
+  16% {
+    opacity: 0.95;
+  }
+
+  100% {
+    opacity: 0;
+    transform: skewX(-18deg) translateX(350%);
+  }
+}
+
 @keyframes startupTicker {
   0% {
     transform: translateX(0);
@@ -263,6 +319,11 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .lux-motion {
+    animation: none;
+  }
+
+  .cta-glint-once::after,
+  .logo-glint-once::after {
     animation: none;
   }
 
