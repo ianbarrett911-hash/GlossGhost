@@ -1,0 +1,26 @@
+<div id="video-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-4">
+  <div class="relative w-full max-w-4xl bg-brand-dark border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
+    <div class="p-5 border-b border-white/5 flex items-center justify-between">
+      <span class="text-xs font-black tracking-widest text-brand-cyan uppercase">GLOSSGHOST DETAILED DEMO</span>
+      <button onclick="closeVideoModal()" class="text-white/60 hover:text-brand-cyan transition-colors duration-200 p-2 hover:bg-white/5 rounded-xl">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <div class="relative aspect-video bg-black">
+      <video
+        id="watch-video"
+        class="w-full h-full object-cover"
+        controls
+        muted
+        autoplay
+        loop
+        playsinline
+        preload="metadata"
+      >
+        <source src="images/6872093-uhd_3840_2160_25fps.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+</div>

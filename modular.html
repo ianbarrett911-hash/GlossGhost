@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GlossGhost Modular Shell</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              cyan: '#00f0ff',
+              darkCyan: '#00a3e0',
+              navy: '#0b132b',
+              dark: '#08080c',
+              card: '#12121a',
+              muted: '#94a3b8'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif']
+          },
+          boxShadow: {
+            'cyan-glow': '0 0 20px rgba(0, 240, 255, 0.25)',
+            'cyan-glow-strong': '0 0 35px rgba(0, 240, 255, 0.55)',
+            'cyan-inset': 'inset 0 0 15px rgba(0, 240, 255, 0.2)'
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css?v=20260812">
+</head>
+<body class="text-white min-h-screen overflow-x-hidden selection:bg-brand-cyan selection:text-black">
+  <div data-section="announcement"></div>
+  <div id="app" class="relative min-h-screen flex flex-col justify-between">
+    <div data-section="header"></div>
+    <main class="flex-grow">
+      <div data-section="hero"></div>
+      <div data-section="metrics-strip"></div>
+      <div data-section="feature-grid"></div>
+      <div data-section="about"></div>
+      <div data-section="ribbon"></div>
+    </main>
+    <div data-section="footer"></div>
+    <div data-section="cart-drawer"></div>
+    <div data-section="video-modal"></div>
+  </div>
+  <script src="assets/js/main.js?v=20260812" defer></script>
+  <script src="assets/js/section-loader.js?v=20260812" defer></script>
+</body>
+</html>
