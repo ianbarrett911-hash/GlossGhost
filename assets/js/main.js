@@ -4,6 +4,7 @@
 */
 
 let cart = {};
+const DEFAULT_INTEREST_ENDPOINT = 'https://formspree.io/f/mvkprovz';
 
 function toggleCartDrawer() {
   const drawer = document.getElementById('cart-drawer');
@@ -185,9 +186,9 @@ async function submitRegisterInterestForm(event) {
     return;
   }
 
-  const endpoint = form.dataset.endpoint || window.GLOSSGHOST_INTEREST_ENDPOINT || '';
-  if (!endpoint || endpoint.includes('REPLACE_WITH_YOUR_FORM_ID')) {
-    alert('Endpoint is not configured yet. Replace REPLACE_WITH_YOUR_FORM_ID in the form endpoint before going live.');
+  const endpoint = form.dataset.endpoint || window.GLOSSGHOST_INTEREST_ENDPOINT || DEFAULT_INTEREST_ENDPOINT;
+  if (!endpoint) {
+    alert('Interest form endpoint is not configured yet.');
     return;
   }
 
@@ -214,13 +215,27 @@ async function submitRegisterInterestForm(event) {
     });
 
     if (!response.ok) {
-      throw new Error('Request failed');
+      let errorMessage = 'Request failed';
+      try {
+        const responseText = await response.text();
+        if (responseText) {
+          try {
+            const errorBody = JSON.parse(responseText);
+            errorMessage = errorBody?.error || errorBody?.message || responseText;
+          } catch (parseError) {
+            errorMessage = responseText;
+          }
+        }
+      } catch (readError) {
+        errorMessage = 'Request failed';
+      }
+      throw new Error(errorMessage);
     }
 
     form.reset();
     alert('Thanks for registering your interest. Please check your inbox for confirmation (double opt-in).');
   } catch (error) {
-    alert('We could not submit your request right now. Please try again shortly or email support@glossghost.com.');
+    alert(`We could not submit your request right now. ${error?.message || 'Please try again shortly or email support@glossghost.com.'}`);
   } finally {
     if (submitButton) {
       submitButton.disabled = false;
