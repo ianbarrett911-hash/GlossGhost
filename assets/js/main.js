@@ -156,6 +156,42 @@ function closeStartupModal() {
   modal.classList.add('opacity-0', 'pointer-events-none');
 }
 
+function closeInterestNoticeModal() {
+  const modal = document.getElementById('interest-notice-modal');
+  if (!modal) {
+    return;
+  }
+  modal.classList.remove('opacity-100', 'pointer-events-auto');
+  modal.classList.add('opacity-0', 'pointer-events-none');
+}
+
+function openInterestNoticeModal({ title, message, kicker = 'Confirmation', tone = 'success' }) {
+  const modal = document.getElementById('interest-notice-modal');
+  const titleEl = document.getElementById('interest-notice-title');
+  const messageEl = document.getElementById('interest-notice-message');
+  const kickerEl = document.getElementById('interest-notice-kicker');
+
+  if (!modal || !titleEl || !messageEl || !kickerEl) {
+    return;
+  }
+
+  titleEl.textContent = title;
+  messageEl.textContent = message;
+  kickerEl.textContent = kicker;
+  kickerEl.classList.remove('text-brand-cyan', 'text-red-400', 'text-emerald-400');
+
+  if (tone === 'error') {
+    kickerEl.classList.add('text-red-400');
+  } else if (tone === 'success') {
+    kickerEl.classList.add('text-brand-cyan');
+  } else {
+    kickerEl.classList.add('text-emerald-400');
+  }
+
+  modal.classList.remove('opacity-0', 'pointer-events-none');
+  modal.classList.add('opacity-100', 'pointer-events-auto');
+}
+
 function jumpToRegisterInterest() {
   closeStartupModal();
   const target = document.getElementById('register-interest');
@@ -178,7 +214,12 @@ async function submitRegisterInterestForm(event) {
   }
 
   if (!consentField.checked) {
-    alert('Please provide consent before registering your interest.');
+    openInterestNoticeModal({
+      title: 'Consent required',
+      message: 'Please tick the consent box before registering your interest.',
+      kicker: 'Action needed',
+      tone: 'error'
+    });
     return;
   }
 
@@ -188,7 +229,12 @@ async function submitRegisterInterestForm(event) {
 
   const endpoint = form.dataset.endpoint || window.GLOSSGHOST_INTEREST_ENDPOINT || DEFAULT_INTEREST_ENDPOINT;
   if (!endpoint) {
-    alert('Interest form endpoint is not configured yet.');
+    openInterestNoticeModal({
+      title: 'Form not ready',
+      message: 'The interest form endpoint is not configured yet.',
+      kicker: 'Configuration',
+      tone: 'error'
+    });
     return;
   }
 
@@ -233,9 +279,19 @@ async function submitRegisterInterestForm(event) {
     }
 
     form.reset();
-    alert('Thanks for registering your interest. Please check your inbox for confirmation (double opt-in).');
+    openInterestNoticeModal({
+      title: 'You are on the list',
+      message: 'Thanks for registering your interest. Please check your inbox for confirmation (double opt-in).',
+      kicker: 'Success',
+      tone: 'success'
+    });
   } catch (error) {
-    alert(`We could not submit your request right now. ${error?.message || 'Please try again shortly or email support@glossghost.com.'}`);
+    openInterestNoticeModal({
+      title: 'Submission failed',
+      message: `We could not submit your request right now. ${error?.message || 'Please try again shortly or email support@glossghost.com.'}`,
+      kicker: 'Try again',
+      tone: 'error'
+    });
   } finally {
     if (submitButton) {
       submitButton.disabled = false;
