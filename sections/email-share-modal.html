@@ -10,7 +10,7 @@
       </button>
     </div>
 
-    <p class="mt-4 text-sm text-brand-muted leading-relaxed">Your desktop may not have a default mail app set. Choose a webmail option or copy a ready-made draft.</p>
+    <p class="mt-4 text-sm text-brand-muted leading-relaxed">Your desktop may not have a default mail app set. The button below picks the best email provider automatically for your browser or device.</p>
 
     <div class="mt-5 rounded-2xl border border-white/10 bg-white/5 p-4 space-y-3 text-sm">
       <div>
@@ -24,14 +24,9 @@
     </div>
 
     <div class="mt-6 flex flex-col gap-3">
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&su=GlossGhost%20%7C%20Premium%20Waterless%20Detail%20Spray&body=GlossGhost%20is%20worth%20a%20look.%0A%0A" target="_blank" rel="noreferrer" class="w-full px-5 py-3 bg-brand-cyan hover:bg-brand-darkCyan text-black font-black text-xs tracking-[0.14em] uppercase rounded-xl transition-colors text-center">
-          Open Gmail
-        </a>
-        <a href="https://outlook.office.com/mail/deeplink/compose?subject=GlossGhost%20%7C%20Premium%20Waterless%20Detail%20Spray&body=GlossGhost%20is%20worth%20a%20look.%0A%0A" target="_blank" rel="noreferrer" class="w-full px-5 py-3 bg-white/5 hover:bg-white/10 text-white font-black text-xs tracking-[0.14em] uppercase rounded-xl border border-white/10 transition-colors text-center">
-          Open Outlook
-        </a>
-      </div>
+      <button onclick="openPreferredEmailProvider()" class="w-full px-5 py-3 bg-brand-cyan hover:bg-brand-darkCyan text-black font-black text-xs tracking-[0.14em] uppercase rounded-xl transition-colors">
+        Open email app
+      </button>
       <button onclick="copyGlossGhostEmailDraft().then((copied) => { if (copied) { openInterestNoticeModal({ title: 'Draft copied', message: 'The email draft has been copied to your clipboard.', kicker: 'Copied', tone: 'success' }); } else { openInterestNoticeModal({ title: 'Copy unavailable', message: 'Your browser blocked clipboard access. Try the email app option instead.', kicker: 'Heads up', tone: 'error' }); } })" class="w-full px-5 py-3 bg-white/5 hover:bg-white/10 text-white font-black text-xs tracking-[0.14em] uppercase rounded-xl border border-white/10 transition-colors">
         Copy email draft
       </button>

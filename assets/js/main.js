@@ -204,6 +204,35 @@ function openEmailShareModal() {
   modal.classList.add('opacity-100', 'pointer-events-auto');
 }
 
+function getPreferredEmailProvider() {
+  const userAgent = navigator.userAgent || '';
+  const platform = navigator.platform || '';
+
+  if (/edg\//i.test(userAgent) || /windows/i.test(platform)) {
+    return 'outlook';
+  }
+
+  return 'gmail';
+}
+
+function buildEmailComposeUrl(provider) {
+  const shareUrl = `${window.location.origin}${window.location.pathname}`;
+  const subject = encodeURIComponent('GlossGhost | Premium Waterless Detail Spray');
+  const body = encodeURIComponent(`GlossGhost is worth a look.\n\n${shareUrl}`);
+
+  if (provider === 'outlook') {
+    return `https://outlook.office.com/mail/deeplink/compose?subject=${subject}&body=${body}`;
+  }
+
+  return `https://mail.google.com/mail/?view=cm&fs=1&su=${subject}&body=${body}`;
+}
+
+function openPreferredEmailProvider() {
+  const provider = getPreferredEmailProvider();
+  const composeUrl = buildEmailComposeUrl(provider);
+  window.open(composeUrl, '_blank', 'noopener,noreferrer');
+}
+
 async function copyGlossGhostLink() {
   const shareUrl = `${window.location.origin}${window.location.pathname}`;
 
