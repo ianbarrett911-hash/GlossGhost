@@ -137,16 +137,20 @@ body {
 .startup-banner-track {
   display: flex;
   width: max-content;
+  min-width: max-content;
   gap: 3rem;
   animation: startupTicker 24s linear infinite;
+  will-change: transform;
 }
 
 .startup-banner-item {
   padding-inline: 0.75rem;
 }
 
-.startup-banner-wrap:hover .startup-banner-track {
-  animation-play-state: paused;
+@media (hover: hover) and (pointer: fine) {
+  .startup-banner-wrap:hover .startup-banner-track {
+    animation-play-state: paused;
+  }
 }
 
 @media (max-width: 767px) {
