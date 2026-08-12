@@ -123,3 +123,17 @@ body {
 .headlight-video-fadeout .headlight-video-wrap {
   opacity: 0;
 }
+
+@media (max-width: 767px) {
+  header button,
+  #mobile-menu a,
+  #cart-drawer button,
+  #video-modal button,
+  footer a {
+    min-height: 44px;
+  }
+
+  #home {
+    min-height: calc(100svh - 112px);
+  }
+}
