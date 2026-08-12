@@ -20,6 +20,11 @@ body {
   background-color: #08080c;
 }
 
+/* Global image brightness pass for a cleaner, more vivid presentation. */
+img {
+  filter: brightness(1.1);
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -76,14 +81,14 @@ body {
 /* Shared treatment for icon library assets */
 .icon-lib {
   opacity: 0.92;
-  filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.18));
+  filter: brightness(1.1) drop-shadow(0 0 6px rgba(0, 240, 255, 0.18));
   transition: opacity 0.2s ease, filter 0.2s ease, transform 0.2s ease;
 }
 
 .icon-lib:hover,
 .group:hover .icon-lib {
   opacity: 1;
-  filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.38));
+  filter: brightness(1.1) drop-shadow(0 0 10px rgba(0, 240, 255, 0.38));
   transform: translateY(-0.5px);
 }
 
