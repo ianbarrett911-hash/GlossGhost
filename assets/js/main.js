@@ -192,6 +192,32 @@ function openInterestNoticeModal({ title, message, kicker = 'Confirmation', tone
   modal.classList.add('opacity-100', 'pointer-events-auto');
 }
 
+async function shareGlossGhostPage() {
+  const shareUrl = `${window.location.origin}${window.location.pathname}`;
+  const shareTitle = 'GlossGhost | Premium Waterless Detail Spray';
+  const shareText = 'GlossGhost is worth a look.';
+
+  try {
+    if (navigator.share) {
+      await navigator.share({
+        title: shareTitle,
+        text: shareText,
+        url: shareUrl
+      });
+      return;
+    }
+  } catch (error) {
+    if (error && error.name === 'AbortError') {
+      return;
+    }
+    // Fall back to email when the native share sheet is unavailable.
+  }
+
+  const subject = encodeURIComponent(shareTitle);
+  const body = encodeURIComponent(`${shareText}\n\n${shareUrl}`);
+  window.location.href = `mailto:?subject=${subject}&body=${body}`;
+}
+
 function jumpToRegisterInterest() {
   closeStartupModal();
   const target = document.getElementById('register-interest');
