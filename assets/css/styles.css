@@ -223,11 +223,6 @@ body {
   position: relative;
 }
 
-.logo-glint-target {
-  display: inline-flex;
-  overflow: hidden;
-}
-
 .cta-glint-target {
   overflow: hidden;
   isolation: isolate;
