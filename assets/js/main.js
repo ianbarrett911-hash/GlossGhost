@@ -580,28 +580,12 @@ function queueHeadlightFlash() {
   window.setTimeout(tryFlash, 80);
 }
 
-function safeSessionFlagExists(key) {
-  try {
-    return window.sessionStorage.getItem(key) === '1';
-  } catch (error) {
-    return false;
-  }
-}
-
-function safeSessionFlagSet(key) {
-  try {
-    window.sessionStorage.setItem(key, '1');
-  } catch (error) {
-    // Ignore storage failures in private/restricted browsing contexts.
-  }
-}
-
 function prefersReducedMotion() {
   return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
-function queueOneTimeGlint({ selector, animationClass, sessionKey, delayMs }) {
-  if (prefersReducedMotion() || safeSessionFlagExists(sessionKey)) {
+function queueOneTimeGlint({ selector, animationClass, delayMs }) {
+  if (prefersReducedMotion()) {
     return;
   }
 
@@ -609,8 +593,6 @@ function queueOneTimeGlint({ selector, animationClass, sessionKey, delayMs }) {
   if (!target) {
     return;
   }
-
-  safeSessionFlagSet(sessionKey);
 
   window.setTimeout(() => {
     target.classList.remove(animationClass);
@@ -634,14 +616,12 @@ function runFirstViewGlints() {
   queueOneTimeGlint({
     selector: '#brand-logo-glint',
     animationClass: 'logo-glint-once',
-    sessionKey: 'gg_logo_glint_seen_v1',
     delayMs: 260
   });
 
   queueOneTimeGlint({
     selector: '#hero-primary-cta',
     animationClass: 'cta-glint-once',
-    sessionKey: 'gg_cta_glint_seen_v1',
     delayMs: 880
   });
 }
