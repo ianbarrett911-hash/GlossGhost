@@ -5,6 +5,9 @@
 
 :root {
   color-scheme: dark;
+  --lut-photo-brightness: 1.08;
+  --lut-photo-contrast: 1.12;
+  --lut-photo-saturation: 1.1;
 }
 
 html {
@@ -20,9 +23,15 @@ body {
   background-color: #08080c;
 }
 
-/* Global image brightness pass for a cleaner, more vivid presentation. */
-img {
-  filter: brightness(1.1);
+/* Unified LUT-style grade for product/lifestyle photography only. */
+.lut-photo {
+  filter: brightness(var(--lut-photo-brightness)) contrast(var(--lut-photo-contrast)) saturate(var(--lut-photo-saturation));
+  transition: filter 0.35s ease;
+}
+
+.group:hover .lut-photo,
+.lut-photo:hover {
+  filter: brightness(1.12) contrast(1.14) saturate(1.12);
 }
 
 /* Custom scrollbar */
