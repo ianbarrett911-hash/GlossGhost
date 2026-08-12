@@ -183,6 +183,28 @@ function openShareModal() {
   modal.classList.add('opacity-100', 'pointer-events-auto');
 }
 
+function closeEmailShareModal() {
+  const modal = document.getElementById('email-share-modal');
+  if (!modal) {
+    return;
+  }
+  modal.classList.remove('opacity-100', 'pointer-events-auto');
+  modal.classList.add('opacity-0', 'pointer-events-none');
+}
+
+function openEmailShareModal() {
+  const modal = document.getElementById('email-share-modal');
+  const urlEl = document.getElementById('email-share-url');
+  if (!modal) {
+    return;
+  }
+  if (urlEl) {
+    urlEl.textContent = `${window.location.origin}${window.location.pathname}`;
+  }
+  modal.classList.remove('opacity-0', 'pointer-events-none');
+  modal.classList.add('opacity-100', 'pointer-events-auto');
+}
+
 async function copyGlossGhostLink() {
   const shareUrl = `${window.location.origin}${window.location.pathname}`;
 
@@ -215,6 +237,44 @@ async function copyGlossGhostLink() {
 }
 
 function emailGlossGhostLink() {
+  openEmailShareModal();
+}
+
+async function copyGlossGhostEmailDraft() {
+  const shareUrl = `${window.location.origin}${window.location.pathname}`;
+  const shareTitle = 'GlossGhost | Premium Waterless Detail Spray';
+  const shareText = 'GlossGhost is worth a look.';
+  const draft = `${shareTitle}\n\n${shareText}\n\n${shareUrl}`;
+
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(draft);
+      return true;
+    }
+  } catch (error) {
+    // Fall through to the legacy copy path.
+  }
+
+  const tempInput = document.createElement('textarea');
+  tempInput.value = draft;
+  tempInput.setAttribute('readonly', 'true');
+  tempInput.style.position = 'absolute';
+  tempInput.style.left = '-9999px';
+  document.body.appendChild(tempInput);
+  tempInput.select();
+
+  let copied = false;
+  try {
+    copied = document.execCommand('copy');
+  } catch (error) {
+    copied = false;
+  }
+
+  document.body.removeChild(tempInput);
+  return copied;
+}
+
+function launchEmailClient() {
   const shareUrl = `${window.location.origin}${window.location.pathname}`;
   const shareTitle = 'GlossGhost | Premium Waterless Detail Spray';
   const shareText = 'GlossGhost is worth a look.';
