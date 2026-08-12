@@ -177,7 +177,6 @@ function closeShareModal() {
 function openShareModal() {
   const modal = document.getElementById('share-modal');
   if (!modal) {
-    return;
   }
   modal.classList.remove('opacity-0', 'pointer-events-none');
   modal.classList.add('opacity-100', 'pointer-events-auto');
